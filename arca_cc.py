@@ -14,13 +14,10 @@ category = '보드의 카테고리(Python)'
 login_id = '아카라이브의 아이디'
 login_password = '아카라이브의 비밀번호'
 
-ban_contry = [지역코드(숫자만)]
+ban_country = [지역코드(숫자만)]
 start_page = 시작페이지(숫자만)
 end_page = 끝페이지(숫자만)
 ####################
-
-
-
 
 
 
@@ -37,6 +34,7 @@ driver = webdriver.Chrome(wd_locate, options=options)
 login_url = 'https://arca.live/u/login?goto=/b/' + board
 arc_url = 'https://arca.live/b/' + board + '?' + 'category=' + category + '&target=all&keyword=&p='
 
+
 #아카라이브 로그인
 print('로그인을 시도합니다.')
 driver.get(login_url)
@@ -45,10 +43,12 @@ driver.find_element_by_xpath('//*[@id="idInput"]').send_keys(login_id)
 driver.find_element_by_xpath('//*[@id="idPassword"]').send_keys(login_password)
 driver.find_element_by_xpath('/html/body/div/div[3]/article/div/div[2]/div/div/form/div[3]/button').click()
 
+
 #아카라이브 채널 열기
 print('채널에 접속합니다.')
 driver.get(arc_url)
 time.sleep(1)
+
 
 #경고창 스킵
 try:
@@ -56,6 +56,7 @@ try:
     driver.find_element_by_xpath('/html/body/div[3]/div/div/div[3]/button[1]').click()
 except:
     pass
+
 
 #국가제한 변경구문
 for page in range(start_page, end_page):
@@ -73,13 +74,14 @@ for page in range(start_page, end_page):
         #Article 클릭
         driver.find_element_by_xpath('//*[@id="controlArticle"]').click()
         time.sleep(0.1)
+        
         #국가제한 클릭
         try:
             driver.find_element_by_xpath('/html/body/div/div[3]/article/div[2]/div[3]/div[1]/span[3]/span[2]/a[4]').click()
         except:
             driver.find_element_by_xpath('/html/body/div/div[3]/article/div[2]/div[2]/div[1]/span[3]/span[2]/a[4]').click()
         time.sleep(0.1)
-        for check in ban_contry:
+        for check in ban_country:
             if driver.find_element_by_xpath('/html/body/div[1]/div[3]/article/div[1]/div/form/div[2]/div/div/div['+str(check)+']/input').get_attribute('checked'):
                 print('이 게시글은 이미 지역설정이 완료되어있습니다.\n\n')
                 driver.find_element_by_xpath('/html/body/div[1]/div[3]/article/div[1]/div/form/div[3]/button[1]').click()
