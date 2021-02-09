@@ -17,11 +17,19 @@ login_password = '아카라이브의 비밀번호'
 ban_country = [지역코드(숫자만)]
 start_page = 시작페이지(숫자만)
 end_page = 끝페이지(숫자만)
+
+#게시글은 기본 총 30개까지 출력되며 1페이지 기준 start_post는 8, end_post는 37 range 함수를 쓰기때문에 end_post에 1을 더한 38을 입력 해 주셔야 합니다.
+#아무리 해도 프로그램이 뻑 난다면 xpath값을 직접 기입해주는것이 좋습니다.
+start_post = 2
+end_post = 32
 ####################
 
 
 #webdriver options
 options = webdriver.ChromeOptions()
+#디버깅 시에 headless 부분을 지워주시고 작업 해 주세요.
+options.add_argument('headless')
+options.add_argument('window-size=1920x1080')
 options.add_argument("disable-gpu")
 options.add_argument("disable-infobars")
 options.add_argument("--disable-extensions")
@@ -56,8 +64,7 @@ for page in range(start_page, end_page):
     url = arc_url + str(page)
     driver.get(url)
     time.sleep(1)
-    #게시글은 2부터 시작하고, 한페이지에 표기되는 게시글 수는 총 20개 입니다.
-    for op in range(2, 22):
+    for op in range(start_post, end_post):
         print('[ 현재 게시글은 '+str(page)+' 페이지의 '+str(op)+' 번째 게시글 입니다. ]\n')
         
         #새창으로 게시글 열기
